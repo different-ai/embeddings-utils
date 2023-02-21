@@ -1,13 +1,10 @@
-import uuid from '../index';
+import { embeddify } from '../index';
+import { example } from '../exampleLongPrompt';
 
 describe('valid UUID', () => {
-  let VALID_UUID_REGEX: RegExp;
-
-  beforeAll(() => {
-    VALID_UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-  });
-
-  test('should match a valid UUID', () => {
-    expect(VALID_UUID_REGEX.test(uuid.v4())).toBeTruthy();
+  test('should be able to split into chunks', () => {
+    console.log('start');
+    const chunks = embeddify(example);
+    expect(chunks.length).toBeGreaterThan(0);
   });
 });
