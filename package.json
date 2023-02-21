@@ -1,7 +1,7 @@
 {
-  "name": "embeddify",
+  "name": "long-prompt",
   "version": "0.0.1",
-  "description": "Easily prepare split and embed your texts   ",
+  "description": "Easily prepare your texts for OpenAI Embeddings",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {

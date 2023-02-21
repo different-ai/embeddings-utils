@@ -51,7 +51,7 @@ export function split(prompt: string) {
 
 type Batches = { data: string }[];
 
-export async function index(chunks: string[], embedCallback: (batch: Batches) => void, contextName: string) {
+export async function index(chunks: string[], embedCallback: (batch: Batches) => void) {
   const batches: Batches[] = [];
   for (let i = 0; i < chunks.length; i += 100) {
     batches.push(chunks.slice(i, i + 100).map((text) => ({ data: text })));
