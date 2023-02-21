@@ -57,9 +57,6 @@ export async function index(chunks: string[], embedCallback: (batch: Batches) =>
     batches.push(chunks.slice(i, i + 100).map((text) => ({ data: text })));
   }
 
-  console.log('Embedding', chunks.length, 'texts in', batches.length, 'batches...');
-
-  console.log('Done embedding texts in Embedbase!');
   return await Promise.all(batches.map((batch) => embedCallback(batch)));
 }
 // should index chunks
