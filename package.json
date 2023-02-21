@@ -1,7 +1,7 @@
 {
-  "name": "ts-npm-package-boilerplate",
-  "version": "0.2.1",
-  "description": "TypeScript NPM Module Boilerplate",
+  "name": "embeddify",
+  "version": "0.0.1",
+  "description": "Easily prepare split and embed your texts   ",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -18,18 +18,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hebertcisco/ts-npm-package-boilerplate.git"
+    "url": "git+https://github.com/another-ai/embeddify.git"
   },
   "keywords": [
-    "boilerplate",
+    "embeddings",
+    "utils",
     "typescript"
   ],
-  "author": "Hebert Cisco",
+  "author": "Different AI",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/hebertcisco/ts-npm-package-boilerplate/issues"
+    "url": "https://github.com/another-ai/embeddify/issues"
   },
-  "homepage": "https://github.com/hebertcisco/ts-npm-package-boilerplate#readme",
+  "homepage": "https://github.com/another-ai/embeddify#readme",
   "devDependencies": {
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.46.0",

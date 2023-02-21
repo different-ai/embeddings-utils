@@ -40,7 +40,7 @@ function splitIntoMany(text: string, maxTokens = 500) {
   return chunks;
 }
 
-export function embeddify(prompt: string) {
+export function split(prompt: string) {
   // should split into tokens
   if (!prompt || prompt.length === 0) {
     throw new Error('Nothing to embeddify');
@@ -49,4 +49,19 @@ export function embeddify(prompt: string) {
   return chunks;
 }
 
-export default embeddify;
+type Batches = { data: string }[];
+
+export async function index(chunks: string[], embedCallback: (batch: Batches) => void, contextName: string) {
+  const batches: Batches[] = [];
+  for (let i = 0; i < chunks.length; i += 100) {
+    batches.push(chunks.slice(i, i + 100).map((text) => ({ data: text })));
+  }
+
+  console.log('Embedding', chunks.length, 'texts in', batches.length, 'batches...');
+
+  console.log('Done embedding texts in Embedbase!');
+  return await Promise.all(batches.map((batch) => embedCallback(batch)));
+}
+// should index chunks
+
+export default { split, index };
