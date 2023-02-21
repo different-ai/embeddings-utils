@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/another-ai/embeddify.git"
+    "url": "git+https://github.com/another-ai/long-prompts.git"
   },
   "keywords": [
     "embeddings",
@@ -28,9 +28,9 @@
   "author": "Different AI",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/another-ai/embeddify/issues"
+    "url": "https://github.com/another-ai/long-prompts/issues"
   },
-  "homepage": "https://github.com/another-ai/embeddify#readme",
+  "homepage": "https://github.com/another-ai/long-prompts#readme",
   "devDependencies": {
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.46.0",
