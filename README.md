@@ -10,7 +10,9 @@
 
 ## Usage
 
-### Split files
+### Split long strings
+
+`split` makes sure your string will are short enough to be embedded
 
 ```js
 import { split } from 'embeddings-splitter';
