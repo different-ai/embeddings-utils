@@ -2,7 +2,7 @@ import { get_encoding } from '@dqbd/tiktoken';
 
 const tokenizer = get_encoding('cl100k_base');
 
-function splitIntoMany(text: string, maxTokens = 500) {
+function splitIntoMany(text: string, maxTokens: number) {
   // Split the text into sentences
   const sentences = text.split('. ');
 
@@ -40,12 +40,12 @@ function splitIntoMany(text: string, maxTokens = 500) {
   return chunks;
 }
 
-export function split(prompt: string) {
+export function split(prompt: string, maxTokens = 500) {
   // should split into tokens
   if (!prompt || prompt.length === 0) {
     throw new Error('Nothing to embeddify');
   }
-  const chunks = splitIntoMany(prompt);
+  const chunks = splitIntoMany(prompt, maxTokens);
   return chunks;
 }
 
