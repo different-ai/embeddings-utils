@@ -1,7 +1,7 @@
 {
-  "name": "long-prompt",
+  "name": "embeddings-splitter",
   "version": "0.0.2",
-  "description": "Easily prepare your texts for OpenAI Embeddings",
+  "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddins",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
@@ -10,6 +10,7 @@
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
     "test": "jest --config jest.config.js",
+    "test:watch": "jest --config jest.config.js --watch",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
@@ -18,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/another-ai/long-prompts.git"
+    "url": "git+https://github.com/different-ai/embeddings-splitter.git"
   },
   "keywords": [
     "embeddings",
@@ -28,9 +29,9 @@
   "author": "Different AI",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/another-ai/long-prompts/issues"
+    "url": "https://github.com/different-ai/embeddings-splitter/issues"
   },
-  "homepage": "https://github.com/another-ai/long-prompts#readme",
+  "homepage": "https://github.com/different-ai/embeddings-splitter#readme",
   "devDependencies": {
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.46.0",
