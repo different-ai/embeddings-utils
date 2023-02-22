@@ -2,42 +2,48 @@ import { get_encoding } from '@dqbd/tiktoken';
 
 const tokenizer = get_encoding('cl100k_base');
 
-function splitIntoMany(text: string, maxTokens: number) {
-  // Split the text into sentences
-  const sentences = text.split('. ');
+export function splitIntoMany(text: string, maxTokens: number, regex = /(\.|\?|!|\n)/g) {
+  // Split the text into chunks based on the regular expression
+  const chunks = text.split(regex);
 
-  // Get the number of tokens for each sentence
-  const nTokens = sentences.map((sentence: string) => tokenizer.encode(' ' + sentence).length);
+  // Get the number of tokens for each chunk
+  const nTokens = chunks.map((chunk) => tokenizer.encode(` ${chunk}`).length);
 
-  const chunks = [];
+  const sentences = [];
   let tokensSoFar = 0;
-  let chunk = [];
+  let sentence = '';
 
-  // Loop through the sentences and tokens joined together in a tuple
-  for (let i = 0; i < sentences.length; i++) {
-    const sentence = sentences[i];
+  // Loop through the chunks and tokens joined together in a tuple
+  for (let i = 0; i < chunks.length; i++) {
+    const chunk = chunks[i];
     const token = nTokens[i];
 
-    // If the number of tokens so far plus the number of tokens in the current sentence is greater
-    // than the max number of tokens, then add the chunk to the list of chunks and reset
-    // the chunk and tokens so far
+    // If the number of tokens so far plus the number of tokens in the current chunk is greater
+    // than the max number of tokens, then add the sentence to the list of sentences and reset
+    // the sentence and tokens so far
     if (tokensSoFar + token > maxTokens) {
-      chunks.push(chunk.join('. ') + '.');
-      chunk = [];
+      sentences.push(sentence.trim());
+      sentence = '';
       tokensSoFar = 0;
     }
 
-    // If the number of tokens in the current sentence is greater than the max number of
-    // tokens, go to the next sentence
+    // If the number of tokens in the current chunk is greater than the max number of
+    // tokens, go to the next chunk
     if (token > maxTokens) {
       continue;
     }
 
-    // Otherwise, add the sentence to the chunk and add the number of tokens to the total
-    chunk.push(sentence);
+    // Otherwise, add the chunk to the sentence and add the number of tokens to the total
+    sentence += chunk;
     tokensSoFar += token + 1;
   }
-  return chunks;
+
+  // Add the last sentence to the list of sentences
+  if (sentence.trim().length > 0) {
+    sentences.push(sentence.trim());
+  }
+
+  return sentences;
 }
 
 export function split(prompt: string, maxTokens = 500) {
