@@ -59,6 +59,26 @@ export async function index(chunks: string[], embedCallback: (batch: Batches) =>
 
   return await Promise.all(batches.map((batch) => embedCallback(batch)));
 }
-// should index chunks
 
-export default { split, index };
+// should index chunks
+const merge = async (
+  query: string,
+  fetchSimilarities: (query: string) => Promise<{ similarities: [{ data: string }] }>,
+  maxLen = 1800,
+) => {
+  const searchResponse = await fetchSimilarities(query);
+  let curLen = 0;
+  const context = [];
+  for (const similarity of searchResponse['similarities']) {
+    const sentence = similarity['data'];
+    const nTokens = tokenizer.encode(sentence).length;
+    curLen += nTokens + 4;
+    if (curLen > maxLen) {
+      break;
+    }
+    context.push(sentence);
+  }
+  return context.join('\n\n###\n\n');
+};
+
+export default { split, index, merge };
