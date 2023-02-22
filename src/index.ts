@@ -61,7 +61,7 @@ export async function index(chunks: string[], embedCallback: (batch: Batches) =>
 }
 
 // should index chunks
-const merge = async (chunks: string[], maxLen = 1800) => {
+export const merge = async (chunks: string[], maxLen = 1800) => {
   let curLen = 0;
   const context = [];
   for (const chunk of chunks) {
