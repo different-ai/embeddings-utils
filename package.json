@@ -1,7 +1,7 @@
 {
   "name": "embeddings-splitter",
-  "version": "0.0.3",
-  "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddings",
+  "version": "0.0.4",
+  "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddings API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
