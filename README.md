@@ -12,38 +12,19 @@
 
 ### Split long strings
 
-`split` makes sure your string will are short enough to be embedded
+`split` makes sure your string will are short enough to be embedded. (default split size is 500 tokens, but you OpenAI embeddings allow you to go up to 8191)
 
 ```js
 import { split } from 'embeddings-splitter';
 
-// chunks to iterate on and send to a server
 const chunks = split('somVeryLongText...');
+
+// example with biggest chunk size
+const chunks = split('someVeryLongText', 8191)
+
+// now you can send these chunks to be embedded
 ```
 
-### Batch send (experimental)
-
-```js
-import {index} from 'embeddings-splitter';
-
-
-// used to send batches to a server in parellel
-index(chunks, (batch) => {
-  // this example is using Embedbase, but it can be replaced with openai.createEmbeddings
-  const vaultId = 'youtube video id';
-  await fetch(url + '/v1/' + 'your api key', {
-    method: 'POST',
-    headers: {
-    Authorization: 'Bearer ' + apiKey,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      documents: batch,
-    }),
-  });
-});
-
-```
 
 ### Merge chunks into single string
 
@@ -53,7 +34,14 @@ This is useful when you want to do generative search.
 import { merge } from 'embeddings-splitter';
 
 const chunks = ['i am a text', 'that needs to be interpreted as one ', 'for a prompt to make sense'];
-const merged = merge(chunks);
+const context = merge(chunks);
+
+// e.g. of what to do with merged array
+const question = 'what is this text about?"
+
+const prompt = Answer the question based on the context below, and if the question can't be answered based on the context, say "I don't know"\n\nContext: ${context}\n\n---\n\nQuestion: ${question}\nAnswer:
+
+createCompletion(prompt)
 ```
 
 ## 🤝 Contributing
