@@ -1,18 +1,6 @@
- <p align="center">long-prompts</p>
-  <p align="center">
-      <img alt="Issues" src="https://img.shields.io/github/issues/hebertcisco/ts-npm-package-boilerplate?style=flat&color=336791" />
-    </a>
-    <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/pulls">
-      <img alt="GitHub pull requests" src="https://img.shields.io/github/issues-pr/hebertcisco/ts-npm-package-boilerplate?style=flat&color=336791" />
-    </a>
-     <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate">
-      <img alt="GitHub Downloads" src="https://img.shields.io/npm/dw/ts-npm-package-boilerplate?style=flat&color=336791" />
-    </a>
-    <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate">
-      <img alt="GitHub Total Downloads" src="https://img.shields.io/npm/dt/ts-npm-package-boilerplate?color=336791&label=Total%20downloads" />
-    </a>
-
-<a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/issues/new/choose">Request Feature</a>
+ <p align="center">embeddings-splitter</p>
+ <p align="center">A typescript library to split texts into chunks so they can be embedded with OpenAI Embeddings</p>
+ <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/issues/new/choose">Request Feature</a>
 
 # Getting started
 
@@ -28,7 +16,7 @@
 import { split } from 'embeddings-splitter';
 
 // chunks to iterate on and send to a server
-const chunks = split('somVeryLongText');
+const chunks = split('somVeryLongText...');
 ```
 
 ### Batch send (experimental)
@@ -53,6 +41,17 @@ index(chunks, (batch) => {
   });
 });
 
+```
+
+### Merge chunks into single string
+
+This is useful when you want to do generative search.
+
+```js
+import { merge } from 'embeddings-splitter';
+
+const chunks = ['i am a text', 'that needs to be interpreted as one ', 'for a prompt to make sense'];
+const merged = merge(chunks);
 ```
 
 ## 🤝 Contributing
