@@ -1,5 +1,5 @@
  <p align="center">embeddings-splitter</p>
- <p align="center">A typescript library to split texts into chunks so they can be embedded with OpenAI Embeddings</p>
+ <p align="center">A typescript library to split texts into chunks so they can be embedded with OpenAI Embeddings API</p>
  <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/issues/new/choose">Request Feature</a>
 
 # Getting started
