@@ -1,7 +1,7 @@
 // A function that splits a text into smaller pieces of roughly equal length
 // The pieces are delimited by sentences and try to avoid breaking words or punctuation
 // This can be useful for processing long texts with natural language models that have a limited input size
-export function chunkText({
+export function getChunksSimple({
   text, // The input text to be split
   // The desired maximum length of each piece in characters
   // This uses 4 characters as an approximation of the average token length
