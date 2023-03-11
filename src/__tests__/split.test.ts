@@ -1,7 +1,6 @@
-import { get_encoding } from '@dqbd/tiktoken';
 import { readFileSync } from 'fs';
 import path from 'path';
-import { getChunksSimple, getChunksByMaxToken, getChunksByNewLine } from '../index';
+import { getChunksSimple, getChunksByMaxToken, getChunksByNewLine, getChunksByPython } from '../index';
 
 describe('Split text in sentence and with a param for maxChar', () => {
   it('splits text into sentences no longer than maxChars', () => {
@@ -30,5 +29,15 @@ describe('Split based on new line', () => {
     const chunks = getChunksByNewLine(text);
     expect(chunks).toHaveLength(textLines);
     expect(chunks.join('\n')).toBe(text);
+  });
+});
+
+describe('Split based on python functions', () => {
+  it('splits text based on python functions', () => {
+    const text = readFileSync(path.join(__dirname, '../../samples/sample.py'), 'utf8');
+    // i counted the number of functions in the file
+    const functionCount = 18;
+    const chunks = getChunksByPython(text);
+    expect(chunks).toHaveLength(functionCount);
   });
 });
