@@ -1,5 +1,6 @@
 import { get_encoding } from '@dqbd/tiktoken';
 
+
 const tokenizer = get_encoding('cl100k_base');
 
 export function splitIntoMany(text: string, maxTokens: number, regex = /(\.|\?|!|\n)/g) {
@@ -46,12 +47,12 @@ export function splitIntoMany(text: string, maxTokens: number, regex = /(\.|\?|!
   return sentences;
 }
 
-export function split(prompt: string, maxTokens = 500) {
+export function split(text: string, maxTokens = 500) {
   // should split into tokens
   if (!prompt || prompt.length === 0) {
-    throw new Error('Nothing to embeddify');
+    throw new Error('No text provided');
   }
-  const chunks = splitIntoMany(prompt, maxTokens);
+  const chunks = splitIntoMany(text, maxTokens);
   return chunks;
 }
 

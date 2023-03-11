@@ -47,6 +47,7 @@
     "lib/**/*"
   ],
   "dependencies": {
-    "@dqbd/tiktoken": "^0.2.1"
+    "@dqbd/tiktoken": "^0.4.0",
+    "cross-fetch": "^3.1.5"
   }
 }
