@@ -1,6 +1,6 @@
 {
   "name": "embeddings-splitter",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddings API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -19,19 +19,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/another-ai/embeddings-splitter.git"
+    "url": "git+https://github.com/different-ai/embeddings-splitter.git"
   },
   "keywords": [
     "embeddings",
     "utils",
     "typescript"
   ],
-  "author": "another AI",
+  "author": "Different AI",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/another-ai/embeddings-splitter/issues"
+    "url": "https://github.com/different-ai/embeddings-splitter/issues"
   },
-  "homepage": "https://github.com/another-ai/embeddings-splitter#readme",
+  "homepage": "https://github.com/different-ai/embeddings-splitter#readme",
   "devDependencies": {
     "@types/jest": "29.2.4",
     "@typescript-eslint/eslint-plugin": "5.46.0",

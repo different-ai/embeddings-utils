@@ -23,7 +23,7 @@ describe('Splitting based on max tokens', () => {
 
 describe('Split based on new line', () => {
   it('splits text based on new line', () => {
-    const text = readFileSync(path.join(__dirname, '../../samples/sample.js'), 'utf8');
+    const text = readFileSync(path.join(__dirname, '../../samples/sample.ts'), 'utf8');
     // just read the file and count the number of lines
     const textLines = 671;
     const chunks = getChunksByNewLine(text);
