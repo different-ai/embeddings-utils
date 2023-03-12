@@ -15,7 +15,14 @@ describe('Split text in sentence and with a param for maxChar', () => {
 describe('Splitting based on max tokens', () => {
   it('splits text into sentences no longer than maxTokens', async () => {
     const text = 'AGI '.repeat(5000);
-    const chunks = await getChunksByMaxToken(text, 100);
+    const chunks: string[] = [];
+    await getChunksByMaxToken(
+      text,
+      (chunk) => {
+        chunks.push(chunk);
+      },
+      { maxTokens: 100 },
+    );
 
     expect(chunks.join('')).toBe(text);
   });

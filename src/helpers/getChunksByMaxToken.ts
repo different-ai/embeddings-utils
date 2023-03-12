@@ -1,8 +1,7 @@
-import assert from 'node:assert';
-import { get_encoding, Tiktoken, TiktokenEmbedding } from '@dqbd/tiktoken';
+import { get_encoding, TiktokenEmbedding } from '@dqbd/tiktoken';
 
 const EMBEDDING_CTX_LENGTH = 8191;
-const EMBEDDING_ENCODING = 'cl100k_base';
+const EMBEDDING_ENCODING: TiktokenEmbedding = 'cl100k_base';
 
 function* batched(iterable: Uint32Array, n: number) {
   /* Batch data into tuples of length n. The last batch may be shorter. */
@@ -28,18 +27,16 @@ function* chunked_tokens(text: string, encoding_name: TiktokenEmbedding, chunk_l
 
 export async function getChunksByMaxToken(
   text: string,
-  max_tokens = EMBEDDING_CTX_LENGTH,
-  encoding_name: TiktokenEmbedding = EMBEDDING_ENCODING,
+  callback: (chunk: string) => void,
+  { maxTokens = EMBEDDING_CTX_LENGTH, encoding_name = EMBEDDING_ENCODING },
 ) {
-  const chunks = [];
-  for (const chunk of chunked_tokens(text, encoding_name, max_tokens)) {
+  for (const chunk of chunked_tokens(text, encoding_name, maxTokens)) {
     const enc = get_encoding(encoding_name);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const _chunk = new TextDecoder().decode(enc.decode(chunk));
-
-    chunks.push(_chunk);
+    callback(_chunk);
   }
 
   // removing for now but would be cool to add it as a seperate function
@@ -50,6 +47,4 @@ export async function getChunksByMaxToken(
   //     chunk_embeddings_array = chunk_embeddings_array.tolist();
   //     return chunk_embeddings_array;
   //   }
-
-  return chunks;
 }
