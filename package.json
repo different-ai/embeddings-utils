@@ -1,12 +1,11 @@
 {
-  "name": "embeddings-splitter",
+  "name": "embeddings-utils",
   "version": "0.2.2",
   "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddings API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
-
     "format": "prettier --write \"src/**/*.(js|ts)\"",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
