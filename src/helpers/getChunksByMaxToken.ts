@@ -28,7 +28,6 @@ export function splitText(
   const decoder = new TextDecoder();
   const chunks = [];
 
-  console.log('starting while loop');
   while (start_idx < input_ids.length) {
     const chunk = decoder.decode(tokenizer.decode(chunk_ids));
     start_idx += chunkSize - chunkOverlap;
