@@ -3,10 +3,10 @@ import { getAllFilesFromGithubRepo } from '../';
 // import { writeFile } from 'fs';
 // import fetch from 'cross-fetch';
 
-const githubToken = process.env.GITHUB_TOKEN || '';
+const githubToken = process.env.DIFFERENT_READ_GITHUB_TOKEN || '';
 
 // this is more a utils than a test
-test.skip('it can retrieve all files from a github repo', async () => {
+test('it can retrieve all files from a github repo', async () => {
   const files = await getAllFilesFromGithubRepo(
     'https://api.github.com/repos/louis030195/obsidian-ava/contents',
     githubToken,
