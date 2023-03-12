@@ -1,12 +1,16 @@
- <p align="center">embeddings-splitter</p>
- <p align="center">A typescript library to split texts into chunks so they can be embedded with OpenAI Embeddings API</p>
+ <p align="center">embeddings-utils </p>
+ <p align="center">A collection of javascript utils to easily work with OpenAI Embeddings or https://embedbase.xyz</p>
  <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/issues/new/choose">Request Feature</a>
 
 # Getting started
 
+## What utils are part of it:
+- [A text splitter](#split-long-strings)
+- [Get all files from a github repo](#get-all-files-from-a-github-repo)
+
 ## Installation
 
-> npm i embeddings-splitter
+> npm i embeddings-utils
 
 ## Usage
 
@@ -15,33 +19,42 @@
 `split` makes sure your string will are short enough to be embedded. (default split size is 500 tokens, but you OpenAI embeddings allow you to go up to 8191)
 
 ```js
-import { split } from 'embeddings-splitter';
+import { splitText } from "embeddings-utils";
 
-const chunks = split('somVeryLongText...');
+const text = `some very long text`
 
-// example with biggest chunk size
-const chunks = split('someVeryLongText', 8191)
-
-// now you can send these chunks to be embedded
+splitText(text, { maxToken: 500, }, async (chunk) => {
+    // do whatever you want with the chunks
+    // in this case we sent it to https://embedbase.xyz
+    const data = await embedbase.dataset('some-data-set').add(chunk)
+})
 ```
 
 
-### Merge chunks into single string
+### Get all files from a github repo
 
-This is useful when you want to do generative search.
+*Note: this might be removed in the future, I just found myself using it quite often*
 
 ```js
-import { merge } from 'embeddings-splitter';
+import { getAllFilesFromGithubRepo, splitText } from "embeddings-utils";
+// follow this pattern (subDir is optional)
+// https://api.github.com/repos/${orgName}/${projectName}/contents/${subDir}
+const url = `https://api.github.com/repos/steeve/france.code-civil/contents/Livre%20III`
 
-const chunks = ['i am a text', 'that needs to be interpreted as one ', 'for a prompt to make sense'];
-const context = merge(chunks);
+// you need to generate a github token
+const files = await getAllFilesFromGithubRepo(url, GITHUB_TOKEN)
 
-// e.g. of what to do with merged array
-const question = 'what is this text about?"
+// in this example we only want to download markdown files
+const markdownFilesData = files.filter(file => file.name.endsWith('.md'))
 
-const prompt = Answer the question based on the context below, and if the question can't be answered based on the context, say "I don't know"\n\nContext: ${context}\n\n---\n\nQuestion: ${question}\nAnswer:
-
-createCompletion(prompt)
+const markdownFilesContent = markdownFilesData.map(async file => {
+    // this downloads the file content
+    return await fetch(file.download_url, {
+        headers: {
+            Authorization: `token ${GITHUB_TOKEN}`
+        }
+    }).then(res => res.text())
+})
 ```
 
 ## 🤝 Contributing
