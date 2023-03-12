@@ -1,50 +1,51 @@
 import { get_encoding, TiktokenEmbedding } from '@dqbd/tiktoken';
 
-const EMBEDDING_CTX_LENGTH = 8191;
+const MAX_CHUNK_LENGTH = 8191;
 const EMBEDDING_ENCODING: TiktokenEmbedding = 'cl100k_base';
+const CHUNK_OVERLAP = 0;
 
-function* batched(iterable: Uint32Array, n: number) {
-  /* Batch data into tuples of length n. The last batch may be shorter. */
-  if (n < 1) {
-    throw new Error('n must be at least one');
-  }
-  const it = iterable[Symbol.iterator]();
-  while (true) {
-    const batch = [...Array(n)].map(() => it.next().value).filter((x) => x !== undefined);
-    if (batch.length === 0) {
-      break;
-    }
-    yield batch;
-  }
-}
-
-function* chunked_tokens(text: string, encoding_name: TiktokenEmbedding, chunk_length: number) {
-  const encoding = get_encoding(encoding_name);
-  const tokens = encoding.encode(text);
-  const chunks_iterator = batched(tokens, chunk_length);
-  yield* chunks_iterator;
-}
-
-export async function getChunksByMaxToken(
+export function splitText(
   text: string,
-  callback: (chunk: string) => void,
-  { maxTokens = EMBEDDING_CTX_LENGTH, encoding_name = EMBEDDING_ENCODING },
-) {
-  for (const chunk of chunked_tokens(text, encoding_name, maxTokens)) {
-    const enc = get_encoding(encoding_name);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const _chunk = new TextDecoder().decode(enc.decode(chunk));
-    callback(_chunk);
+  {
+    maxTokens = MAX_CHUNK_LENGTH,
+    chunkOverlap = CHUNK_OVERLAP,
+    encodingName = EMBEDDING_ENCODING,
+  }: { maxTokens?: number; chunkOverlap?: number; encodingName?: TiktokenEmbedding },
+  callback?: (chunk: string) => void,
+): string[] {
+  if (chunkOverlap >= maxTokens) {
+    throw new Error('Cannot have chunkOverlap >= chunkSize');
   }
+  const tokenizer = get_encoding(encodingName);
 
-  // removing for now but would be cool to add it as a seperate function
-  //   if (average) {
-  //     let chunk_embeddings_array = np.array(chunk_embeddings);
-  //     chunk_embeddings_array = np.average(chunk_embeddings_array, (axis = 0), (weights = chunk_lens));
-  //     chunk_embeddings_array = chunk_embeddings_array / np.linalg.norm(chunk_embeddings_array); // normalizes length to 1
-  //     chunk_embeddings_array = chunk_embeddings_array.tolist();
-  //     return chunk_embeddings_array;
-  //   }
+  const input_ids = tokenizer.encode(text);
+  const chunkSize = maxTokens;
+
+  let start_idx = 0;
+  let cur_idx = Math.min(start_idx + chunkSize, input_ids.length);
+  let chunk_ids = input_ids.slice(start_idx, cur_idx);
+
+  const decoder = new TextDecoder();
+  const chunks = [];
+
+  console.log('starting while loop');
+  while (start_idx < input_ids.length) {
+    const chunk = decoder.decode(tokenizer.decode(chunk_ids));
+    start_idx += chunkSize - chunkOverlap;
+    cur_idx = Math.min(start_idx + chunkSize, input_ids.length);
+    chunk_ids = input_ids.slice(start_idx, cur_idx);
+    chunks.push(chunk);
+    callback && callback(chunk);
+  }
+  tokenizer.free();
+  return chunks;
 }
+
+// removing for now but would be cool to add it as a seperate function
+//   if (average) {
+//     let chunk_embeddings_array = np.array(chunk_embeddings);
+//     chunk_embeddings_array = np.average(chunk_embeddings_array, (axis = 0), (weights = chunk_lens));
+//     chunk_embeddings_array = chunk_embeddings_array / np.linalg.norm(chunk_embeddings_array); // normalizes length to 1
+//     chunk_embeddings_array = chunk_embeddings_array.tolist();
+//     return chunk_embeddings_array;
+//   }

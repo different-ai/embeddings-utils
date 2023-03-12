@@ -1,15 +1,16 @@
 {
   "name": "embeddings-splitter",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A typescript library to split your long texts into smaller chunks to send them to OpenAI Embeddings API",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
+
     "format": "prettier --write \"src/**/*.(js|ts)\"",
     "lint": "eslint src --ext .js,.ts",
     "lint:fix": "eslint src --fix --ext .js,.ts",
-    "test": "jest --config jest.config.js",
+    "test": "jest --runInBand --config jest.config.js --silent=false",
     "test:watch": "jest --config jest.config.js --watch",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
