@@ -1,3 +1,6 @@
+ ⚠️⚠️⚠️ [We moved this to embedbase-js SDK](https://docs.embedbase.xyz/sdk#splitting-and-chunking-large-texts) ⚠️⚠️⚠️
+ 
+ 
  <p align="center">embeddings-utils </p>
  <p align="center">A collection of javascript utils to easily work with OpenAI Embeddings or https://embedbase.xyz</p>
  <a href="https://github.com/hebertcisco/ts-npm-package-boilerplate/issues/new/choose">Request Feature</a>
